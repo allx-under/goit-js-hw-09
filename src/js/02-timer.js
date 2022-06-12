@@ -1,16 +1,22 @@
 import flatpickr from "flatpickr";
 // Додатковий імпорт стилів
 import "flatpickr/dist/flatpickr.min.css";
-// addEventListener('DOMContentLoaded', onRefreshPageResetTimer)
+
+
 const refs = {
     startBtn: document.querySelector('[data-start]'),
     days: document.querySelector('[data-days]'),
     hours: document.querySelector('[data-hours]'),
     minutes: document.querySelector('[data-minutes]'),
     seconds: document.querySelector('[data-seconds]'),
+    input: document.querySelector('#datetime-picker')
 };
 
-refs.startBtn.disabled = true;
+let intervalId = null;
+
+deactivateBtn();
+
+addEventListener('DOMContentLoaded', onRefreshPageResetTimer);
 
 const options = {
   enableTime: true,
@@ -25,22 +31,26 @@ const options = {
             window.alert("Please choose a date in the future");
         } else
         refs.startBtn.disabled = false;
-        refs.startBtn.addEventListener('click', timer(selectedDateInMs))
-      },
+        refs.startBtn.addEventListener('click', startTimer)
+      function startTimer() {
+        timer(selectedDates[0])
+        }
+  },
 };
-console.log(Date.now())
-let intervalId = null;
-function timer(choosedDate) {
+
+
+
+function timer(choosedDates) {
     
-   intervalId = setInterval(() => {
+  intervalId = setInterval(() => {
         const currentDate = Date.now();
-        const timeDiff = choosedDate - currentDate;
+        const timeDiff = choosedDates - currentDate;
         const convertedTimeInObj = convertMs(timeDiff);
-        refs.days.textContent = String(convertedTimeInObj.days).padStart(2,0);
-        refs.hours.textContent = String(convertedTimeInObj.hours).padStart(2,0);
-        refs.minutes.textContent = String(convertedTimeInObj.minutes).padStart(2,0);
-        refs.seconds.textContent = String(convertedTimeInObj.seconds).padStart(2,0);
-   }, 1000)}
+        renderTimer(convertedTimeInObj);
+  }, 1000)
+  deactivateBtn()
+  refs.input.disabled = true;
+  }
 
 function onRefreshPageResetTimer() {
     clearInterval(intervalId);
@@ -50,6 +60,12 @@ flatpickr('#datetime-picker', options);
 
 // refs.startBtn.addEventListener('click',)
 
+function renderTimer({days, hours, minutes, seconds}) {
+  refs.days.textContent = days.toString().padStart(2,0);
+        refs.hours.textContent = hours.toString().padStart(2,0);
+        refs.minutes.textContent = minutes.toString().padStart(2,0);
+        refs.seconds.textContent = seconds.toString().padStart(2,0);
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -68,4 +84,8 @@ function convertMs(ms) {
   const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
+}
+
+function deactivateBtn() {
+  refs.startBtn.disabled = true;
 }
