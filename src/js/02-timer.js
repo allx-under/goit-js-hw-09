@@ -52,7 +52,7 @@ function timer(choosedDates) {
       clearInterval(intervalId);
       refs.input.disabled = false;
       refs.startBtn.disabled = false;
-      return;
+      renderStartMarkup(0);
     }
   }, 1000)
   deactivateBtn()
@@ -72,6 +72,13 @@ function renderTimer({days, hours, minutes, seconds}) {
         refs.hours.textContent = hours.toString().padStart(2,0);
         refs.minutes.textContent = minutes.toString().padStart(2,0);
         refs.seconds.textContent = seconds.toString().padStart(2,0);
+}
+
+function renderStartMarkup(value) {
+  refs.days.textContent = value.toString().padStart(2,0);
+  refs.hours.textContent = value.toString().padStart(2,0);
+  refs.minutes.textContent = value.toString().padStart(2,0);
+  refs.seconds.textContent = value.toString().padStart(2,0);
 }
 
 function convertMs(ms) {
