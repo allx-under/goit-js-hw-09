@@ -50,6 +50,8 @@ function timer(choosedDates) {
     renderTimer(convertedTimeInObj);
     if (timeDiff === 0) {
       clearInterval(intervalId);
+      refs.input.disabled = false;
+      refs.startBtn.disabled = false;
     }
   }, 1000)
   deactivateBtn()
