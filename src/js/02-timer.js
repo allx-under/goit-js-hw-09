@@ -47,7 +47,10 @@ function timer(choosedDates) {
         const currentDate = Date.now();
         const timeDiff = choosedDates - currentDate;
         const convertedTimeInObj = convertMs(timeDiff);
-        renderTimer(convertedTimeInObj);
+    renderTimer(convertedTimeInObj);
+    if (timeDiff === 0) {
+      clearInterval(intervalId);
+    }
   }, 1000)
   deactivateBtn()
   refs.input.disabled = true;
