@@ -48,10 +48,11 @@ function timer(choosedDates) {
         const timeDiff = choosedDates - currentDate;
         const convertedTimeInObj = convertMs(timeDiff);
     renderTimer(convertedTimeInObj);
-    if (timeDiff === 0) {
+    if (timeDiff <= 0) {
       clearInterval(intervalId);
       refs.input.disabled = false;
       refs.startBtn.disabled = false;
+      return;
     }
   }, 1000)
   deactivateBtn()
