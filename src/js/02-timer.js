@@ -51,7 +51,6 @@ function timer(choosedDates) {
     if (timeDiff <= 0) {
       clearInterval(intervalId);
       refs.input.disabled = false;
-      refs.startBtn.disabled = false;
       renderStartMarkup(0);
     }
   }, 1000)
