@@ -40,19 +40,17 @@ const options = {
 };
 
 
-
 function timer(choosedDates) {
     
   intervalId = setInterval(() => {
-        const currentDate = Date.now();
-        const timeDiff = choosedDates - currentDate;
-        const convertedTimeInObj = convertMs(timeDiff);
-    renderTimer(convertedTimeInObj);
-    if (timeDiff <= 0) {
-      clearInterval(intervalId);
-      refs.input.disabled = false;
-      renderStartMarkup(0);
+    const currentDate = Date.now();
+    const timeDiff = choosedDates - currentDate;
+      if (timeDiff <= 0) {
+        document.location.reload();
     }
+    const convertedTimeInObj = convertMs(timeDiff);
+    renderTimer(convertedTimeInObj);
+    
   }, 1000)
   deactivateBtn()
   refs.input.disabled = true;
@@ -71,13 +69,6 @@ function renderTimer({days, hours, minutes, seconds}) {
         refs.hours.textContent = hours.toString().padStart(2,0);
         refs.minutes.textContent = minutes.toString().padStart(2,0);
         refs.seconds.textContent = seconds.toString().padStart(2,0);
-}
-
-function renderStartMarkup(value) {
-  refs.days.textContent = value.toString().padStart(2,0);
-  refs.hours.textContent = value.toString().padStart(2,0);
-  refs.minutes.textContent = value.toString().padStart(2,0);
-  refs.seconds.textContent = value.toString().padStart(2,0);
 }
 
 function convertMs(ms) {
